@@ -1,0 +1,102 @@
+@charset "utf-8";
+/* Style Reset */
+*{ margin:0; padding:0}
+ul, ol, li, dl, dt, dd {list-style:none;}
+a{text-decoration:none;outline:0px;color:#666}
+img{ border:0;max-width: 100%;}
+.ccsl{overflow: hidden;white-space: nowrap;text-overflow: ellipsis;display: block;}
+.clear {clear:both;}
+body{ width:100%;max-width:512px; margin:0 auto; background:#fff; font-size:12px; line-height:24px; color:#333}
+
+
+.banner{ width:100%;max-width:512px; overflow:hidden; position:relative;font-size:0; margin:0 auto;}
+.b-img{ position:absolute; left:0; top:0;}
+.b-img img{ display:block;float:left;}
+.b-list{ height:20px;margin:0 auto;position:relative;z-index:1;}
+.b-list span{ display:block;cursor:pointer; width:10px; height:10px; border-radius:50%; background:#adc9fd; float:left; margin:0 5px; _margin:0 3px;}
+.b-list .spcss{ background:#3278f9}
+
+
+.btnBox{ padding:20px; overflow:hidden; padding-top: 150%;}
+.btnBox .a1{width:40%; display:block; float:left; height:40px; line-height:40px; border:1px solid #3278f9; border-radius:30px; text-align:center; background:#3278f9; color:#fff; letter-spacing:4px; margin-left:5%; font-size:16px; cursor:pointer}
+.btnBox .a2{width:40%; display:block; float:right; height:40px; line-height:40px; border:1px solid #3278f9; border-radius:30px; text-align:center; background:#fff; color:#3278f9; letter-spacing:4px;margin-right:5%;font-size:16px;cursor:pointer}
+
+
+.txtBox{ overflow:hidden;}
+.txtBox p{ color:#3278f9; text-align:center; letter-spacing:1px}
+
+.txtBox_2{ background:url(../images/linebg.jpg) repeat-x; text-align:center; margin-top:25px; margin-bottom:20px}
+.txtBox_2 p{display:inline-block; background:#fff; padding:0 15px; color:#6F6F6F; letter-spacing:1px}
+
+
+.indexBox{ padding:0 20px 20px; overflow:hidden}
+.indexBox ul{ overflow:hidden; padding:0 20px}
+.indexBox ul li{ float:left; width:33.3%}
+.indexBox ul li img{ display:block; width:50px;margin:0 auto;}
+
+.imgBox{ width:100%; overflow:hidden}
+.imgBox img{ display:block; width:100%}
+
+.itemBox{ padding:40px; overflow:hidden; padding-bottom:0}
+.itemBox .item{ border-bottom:1px solid #cdcdcd; color:#a7a7a7; height:40px; line-height:40px; margin-bottom:15px; display:flex}
+.itemBox .item .L{ float:left; width:40px; height:40px; overflow:hidden}
+.itemBox .item .L img{ display:block; width:20px; margin:10px;}
+.itemBox .item .R{ flex:1;}
+.itemBox .item .R input{ width:90%; background:none; height:40px; line-height:40px; border:0; outline:none; letter-spacing:1px}
+.itemBox .item .C{ flex:1}
+.itemBox .item .C input{width:90%; background:none; height:40px; line-height:40px; border:0; outline:none; letter-spacing:1px}
+.itemBox .item .yzm{ float:right}
+.itemBox .item .yzm img{ display:block; height:38px}
+
+.itemBox .item2{height:42px; overflow:hidden; margin-bottom:10px; margin-top:40px}
+.itemBox .item2 .btn{ width:100%; height:40px; line-height:40px; text-align:center; color:#fff;background:#3278f9; color:#fff; border-radius:6px; outline:none; border:1px solid #3278f9; letter-spacing:2px;cursor:pointer}
+.itemBox .item3{height:42px; overflow:hidden;}
+.itemBox .item3 .btn{width:100%; height:40px; line-height:40px; text-align:center; color:#fff;background:#fff; color:#3278f9; border-radius:6px; outline:none; border:1px solid #3278f9; letter-spacing:2px;cursor:pointer}
+
+
+
+.txtBox_3{ overflow:hidden;}
+.txtBox_3 a{ display:block; color:#3278f9; text-align:center; letter-spacing:1px}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

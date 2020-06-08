@@ -1,0 +1,44 @@
+{
+  "id": "1867941",
+  "name": "MiniChat",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "1330778",
+      "name": "我",
+      "font_class": "wo",
+      "unicode": "e758",
+      "unicode_decimal": 59224
+    },
+    {
+      "icon_id": "2678640",
+      "name": "通讯录",
+      "font_class": "tongxunlu",
+      "unicode": "e660",
+      "unicode_decimal": 58976
+    },
+    {
+      "icon_id": "4186003",
+      "name": "指南针",
+      "font_class": "zhinanzhen",
+      "unicode": "e627",
+      "unicode_decimal": 58919
+    },
+    {
+      "icon_id": "8361827",
+      "name": "聊天",
+      "font_class": "liaotian",
+      "unicode": "e6cb",
+      "unicode_decimal": 59083
+    },
+    {
+      "icon_id": "9642967",
+      "name": "指南针",
+      "font_class": "zhinanzhen1",
+      "unicode": "e651",
+      "unicode_decimal": 58961
+    }
+  ]
+}
