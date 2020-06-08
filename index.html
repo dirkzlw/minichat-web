@@ -1,76 +1,89 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
-	<!-- 适应手机 -->
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-    <title></title>
-    <script src="js/mui.min.js"></script>
-    <link href="css/mui.min.css" rel="stylesheet"/>
-	<!-- 引入主页颜色设置 -->
-	<link href="css/header.css" rel="stylesheet" />
-	<!-- 引入阿里图标库 -->
-	<link href="fontico/iconfont.css" rel="stylesheet"/>
-	<!-- 修改mui.min.js--Unable to preventDefault insid... -->
-    <script type="text/javascript" charset="utf-8">
-      	mui.init();
-		
-		mui.plusReady(function(){
-			plus.navigator.setStatusBarStyle("light");
-			plus.navigator.setStatusBarBackground("#0562bf");
-		});
-    </script>
-</head>
-<body>
-	
-	<!-- 头部标题 -->
-	<header class="mui-bar mui-bar-nav title">
-		<h1 class="mui-title title-text" 
-			style="position:relative;left:0px;font-size: 15px;">
-			微聊
-		</h1>
-	</header>
-	
-	<!-- 底部选项卡 -->
-	<nav class="mui-bar mui-bar-tab">
-		<a class="mui-tab-item mui-active" tabindex="0">
-			<!-- <span class="mui-icon mui-icon-chatbubble"></span> -->
-			<span class="mui-icon iconfont">&#xe6cb;</span>
-			<span class="mui-tab-label">聊天</span>
-		</a>
-		<a class="mui-tab-item" tabindex="1">
-			<span class="mui-icon iconfont">&#xe660;</span>
-			<span class="mui-tab-label">通讯录</span>
-		</a>
-		<a class="mui-tab-item" tabindex="2">
-			<span class="mui-icon iconfont">&#xe627;</span>
-			<span class="mui-tab-label">发现</span>
-		</a>
-		<a class="mui-tab-item" tabindex="3">
-			<span class="mui-icon iconfont">&#xe758;</span>
-			<span class="mui-tab-label">我</span>
-		</a>
-	</nav>
-</body>
+	<head>
+		<meta charset="utf-8">
+		<!-- 适应手机 -->
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<script src="js/mui.min.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<!-- 引入主页颜色设置 -->
+		<link href="css/header.css" rel="stylesheet" />
+		<!-- 引入阿里图标库 -->
+		<link href="fontico/iconfont.css" rel="stylesheet" />
+		<!-- 修改mui.min.js--Unable to preventDefault insid... -->
+		<script type="text/javascript" charset="utf-8">
+			mui.init();
+
+			mui.plusReady(function() {
+				plus.navigator.setStatusBarStyle("light");
+				plus.navigator.setStatusBarBackground("#0562bf");
+			});
+		</script>
+	</head>
+	<body>
+
+		<!-- 头部标题 -->
+		<header class="mui-bar mui-bar-nav title">
+			<h1 class="mui-title title-text" style="position:relative;left:0px;font-size: 15px;">
+				微聊
+			</h1>
+		</header>
+
+		<!-- 底部选项卡 -->
+		<nav class="mui-bar mui-bar-tab">
+			<a class="mui-tab-item mui-active" tabindex="0">
+				<!-- <span class="mui-icon mui-icon-chatbubble"></span> -->
+				<span class="mui-icon iconfont">&#xe6cb;</span>
+				<span class="mui-tab-label">聊天</span>
+			</a>
+			<a class="mui-tab-item" tabindex="1">
+				<span class="mui-icon iconfont">&#xe660;</span>
+				<span class="mui-tab-label">通讯录</span>
+			</a>
+			<a class="mui-tab-item" tabindex="2">
+				<span class="mui-icon iconfont">&#xe627;</span>
+				<span class="mui-tab-label">发现</span>
+			</a>
+			<a class="mui-tab-item" tabindex="3">
+				<span class="mui-icon iconfont">&#xe758;</span>
+				<span class="mui-tab-label">我</span>
+			</a>
+		</nav>
+	</body>
+	<!-- 自定义工具类 -->
+	<script src="js/utils.js"></script>
 	<script type="text/javascript">
 		// 页面数组
-		var pageArr = [
-			{id : "chat-list",url : "chat-list.html"},
-			{id : "contact",url : "contact.html"},
-			{id : "discover",url : "discover.html"},
-			{id : "self",url : "self.html"}
+		var pageArr = [{
+				id: "chat-list",
+				url: "chat-list.html"
+			},
+			{
+				id: "contact",
+				url: "contact.html"
+			},
+			{
+				id: "discover",
+				url: "discover.html"
+			},
+			{
+				id: "me",
+				url: "me.html"
+			}
 		];
 		// 子页样式
 		var pageStyle = {
-			top : "44px",
-			bottom : "50px"
+			top: "44px",
+			bottom: "50px"
 		}
 		// 添加页面
-		mui.plusReady(function () {
-		    // 获取当前webview对象
+		mui.plusReady(function() {
+
+			// 获取当前webview对象
 			var indexWebview = plus.webview.currentWebview()
 			// 对当前webview追加子页的webview对象
-			for(var i=0 ; i < pageArr.length ; i++){
+			for (var i = 0; i < pageArr.length; i++) {
 				var webview = plus.webview.create(pageArr[i].url, pageArr[i].id, pageStyle);
 				// 隐藏子页
 				webview.hide()
@@ -80,19 +93,32 @@
 			// 默认显示第一个页面
 			plus.webview.show(pageArr[0].id)
 		})
-		
+
 		// 监听tab触摸事件
-		mui(".mui-bar-tab").on('tap','.mui-tab-item',function(){
-		  var tabindex = this.getAttribute("tabindex");
-		  // 显示此tab对应的子页
-		  plus.webview.show(pageArr[tabindex].id,"fade-in",200)
-		  // 隐藏其他页面
-		  for(var i=0 ; i < pageArr.length ; i++){
-		  	if(tabindex != i){
-				plus.webview.hide(pageArr[i].id,"fade-out",200)
+		mui(".mui-bar-tab").on('tap', '.mui-tab-item', function() {
+			var tabindex = this.getAttribute("tabindex");
+			// 显示此tab对应的子页
+			plus.webview.show(pageArr[tabindex].id, "fade-in", 200)
+			// 隐藏其他页面
+			for (var i = 0; i < pageArr.length; i++) {
+				if (tabindex != i) {
+					plus.webview.hide(pageArr[i].id, "fade-out", 200)
+				}
 			}
-		  }
-		}) 
-		
+		})
+
+		// 2秒内，两次按返回键退出应用
+		var first = null;
+		mui.back = function() {
+			if (utils.isNull(first)) {
+				first = new Date().getTime();
+				mui.toast('再按一次退出应用');
+				setTimeout(function() {
+					first = null;
+				}, 2000);
+			} else if (new Date().getTime() - first < 2000) {
+				plus.runtime.quit();
+			}
+		}
 	</script>
 </html>

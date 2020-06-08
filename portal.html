@@ -22,12 +22,21 @@
   <a href="register.html" class="a2">注册</a>
 </div> 
 </body>
+	<!-- 自定义工具类 -->
+	<script src="js/utils.js"></script>
 	<script src="js/mui.min.js"></script>
 	<script type="text/javascript" charset="utf-8">
 		mui.plusReady(function(){
 			// 修改手机通知栏背景和字体颜色
 			plus.navigator.setStatusBarStyle("light");
 			plus.navigator.setStatusBarBackground("#0562bf");
+			
+			// 自动登录
+			var userInfo = utils.getUserInfo()
+			if(userInfo != null){
+				mui.openWindow("index.html","index");
+			}
+			
 		});
 	</script>
 </html>

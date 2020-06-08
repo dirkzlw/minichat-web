@@ -6,7 +6,7 @@ window.utils = {
 	 * return false : 非空
 	 */
 	isNull : function(obj){
-		if(obj == "" || obj == null || obj == undefined){
+		if(obj == null || obj == "" || obj == undefined){
 			return true
 		}
 		return false
