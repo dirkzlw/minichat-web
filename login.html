@@ -14,23 +14,79 @@
 <div class="itemBox">
   <div class="item">
     <div class="L"><img src="images/icon1.png"></div>
-    <div class="R"><input name="" type="text" placeholder="请输入用户名"></div>
+    <div class="R"><input id="username" type="text" placeholder="请输入用户名"></div>
   </div>
   <div class="item">
     <div class="L"><img src="images/icon2.png"></div>
-    <div class="R"><input name="" type="password" placeholder="请输入密码"></div>
+    <div class="R"><input id="password" type="password" placeholder="请输入密码"></div>
   </div>
   <div class="item2">
-    <input name="" type="submit" class="btn" value="登录">
+    <input id="btn-log" type="submit" class="btn" value="登录">
   </div>
 </div>
 </body>
+	<!-- 自定义工具类 -->
+	<script src="js/utils.js"></script>
+	<!--layui-->
+	<script src="layui/layui.js" charset="utf-8"></script>
+	<!-- layui需要jquery -->
+	<script src="js/jquery.js"></script>
 	<script src="js/mui.min.js"></script>
 	<script type="text/javascript" charset="utf-8">
+		//添加弹出层
+		layui.use(['layer'], function () {
+			$ = layui.jquery;//jquery
+			layer = layui.layer;//弹出层
+			
+		});
+		
 		mui.plusReady(function(){
 			// 返回门户页面
 			window.addEventListener("popstate", function(e) {
 			}, false);
+		});
+		
+		// 监听登录按钮
+		document.getElementById("btn-log").addEventListener("tap",function () {
+			// 获取三个对象
+			var username = document.getElementById("username").value
+			var password = document.getElementById("password").value
+			
+			if(utils.isNull(username)){
+				layer.msg('用户名不能为空', {icon: 5, time: 1000});
+			}else if(utils.isNull(password)){
+				layer.msg('密码不能为空', {icon: 5, time: 1000});
+			}else{
+				// 与后端联调
+				mui.ajax(utils.serverIp+'/user/login',{
+					data:{
+						'username':username,
+						'password':password,
+					},
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					timeout:10000,//超时时间设置为10秒；
+					headers:{'Content-Type':'application/json'},	              
+					success:function(data){
+						//服务器返回响应，根据响应结果，分析是否登录成功；
+						console.log(JSON.stringify(data))
+						if(data.status == 500){
+							layer.msg(data.msg, {icon: 5, time: 1000});
+						}else if(data.status == 200){
+							// layer.msg('登录成功', {icon: 6, time: 1000});
+							// 登录成功后，将user保存在缓存中
+							var userInfo = data.data;
+							utils.setUserInfo(userInfo)
+							// 页面跳转
+							mui.openWindow("index.html","index")
+						}
+					},
+					error:function(xhr,type,errorThrown){
+						//异常处理；
+					}
+				});
+			}
+		  
 		});
     </script>
 </html>
