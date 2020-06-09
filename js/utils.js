@@ -27,6 +27,14 @@ window.utils = {
 	getUserInfo : function(){
 		var userJsonStr = plus.storage.getItem("userInfo");
 		return JSON.parse(userJsonStr)
+	},
+	
+	/**
+	 * 删除指定键值的缓存
+	 * @param {Object} key
+	 */	
+	removeUserInfo : function(){
+		plus.storage.removeItem("userInfo")
 	}
 	
 }

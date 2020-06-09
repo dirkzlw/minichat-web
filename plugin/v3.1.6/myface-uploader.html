@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="x-ua-compatible" content="ie=edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>Cropper</title>
+		<script src="../../js/mui.min.js"></script>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/header.css" rel="stylesheet" />
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/cropper.css">
+		<link rel="stylesheet" href="css/main.css">
+		<style>
+			#container {
+				width: 100%;
+				position: absolute;
+				top: 44px;
+				bottom: 0px;
+				background: #000000;
+			}
+		</style>
+	</head>
+
+	<body style="background-color: black;">
+		
+		<header class="mui-bar mui-bar-nav title" style="position: fixed;">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: white;"></a>
+			<a id="cutter" class="mui-pull-right" style="font-size: 15px;color: white;line-height: 40px;">
+				<!-- <img src="../../images/upload.png" width="20px"/> -->
+				<span>确定</span>
+			</a>
+			<h1 class="mui-title title-text"><b id="chatting-nickname">修改头像</b></h1>
+		</header>
+
+		<!-- 主体，头像上边距100px，背景颜色为黑色 -->
+		<div class="mui-content" id="div_img_myface" style="background-color: black;">
+			<img id="img_myface" src=""/>
+		</div>
+
+		<!-- Content -->
+		<div id="container">
+			<div class="img-container" style="background-color: #000000;">
+				<img id="image" src="">
+			</div>
+		</div>
+
+	</body>
+	<!-- Scripts -->
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
+	<script src="https://fengyuanchen.github.io/js/common.js"></script>
+	<script src="js/cropper.js"></script>
+	<script src="../../js/utils.js"></script>
+
+	<script type="text/javascript">
+		mui.init();
+		
+		var $image = $('#image');
+		mui.plusReady(function() {
+			
+			var userInfo = utils.getUserInfo()
+			var img_myface = document.getElementById("img_myface");
+			
+			plus.nativeUI.showWaiting( "打开相册中..." );
+			
+			/** ======================== 从相册选择图片 ======================== **/
+				plus.gallery.pick( function(path){
+					// 关闭等待框
+					plus.nativeUI.closeWaiting();
+					
+					$image.attr('src', path);
+					
+					faceCutter();
+				}, function ( e ) {
+					// 关闭等待框
+					plus.nativeUI.closeWaiting();
+					// 未选择本地图片，返回头像页面，新建窗口，避免出现原头像的Bug
+					mui.openWindow({
+						url : "../../face-img.html",
+						id : "face-img",
+						createNew :true
+					});
+				}, {filter:"image"} );
+			
+			/** ======================== 图片裁剪 ======================== **/
+			
+			$("#cutter").on('tap', function() {
+				
+				plus.nativeUI.showWaiting( "上传中..." );
+				
+				var cropper = $image.data('cropper');
+				var result = $image.cropper("getCroppedCanvas");
+				if(result) {
+					var base64Url = result.toDataURL();
+					// 与后端联调
+					mui.ajax(utils.serverIp + "/user/uploadFaceBase64",{
+						data:{
+							userId : userInfo.userId,
+							faceBase64Data : base64Url
+						},
+						dataType:'json',//服务器返回json格式数据
+						type:'post',//HTTP请求类型
+						timeout:10000,//超时时间设置为10秒；
+						headers:{'Content-Type':'application/json'},	              
+						success:function(data){
+							// 关闭等待框
+							plus.nativeUI.closeWaiting();
+							if (data.status == 200) {
+								// 更新用户的缓存
+								var userInfo = data.data;
+								utils.removeUserInfo();
+								utils.setUserInfo(userInfo)
+								console.log(JSON.stringify(data))
+								
+								// 触发另外一个webview的自定义事件，可以使用 mui.fire()
+								var meWebview = plus.webview.getWebviewById("me");
+								mui.fire(meWebview, "refreshUserInfo");
+								
+								// 跳转至我的头像页面
+								mui.openWindow({
+									url : "../../face-img.html",
+									id : "face-img",
+									createNew : true
+								});
+							} else {
+								plus.nativeUI.toast(data.msg)
+							}
+						}
+					});
+				}
+			});
+		});
+		
+		function faceCutter() {
+			
+			plus.nativeUI.showWaiting( "请稍等..." );
+			
+//				var $image = $('#image');
+			var options = {
+				aspectRatio: 1 / 1,
+				crop: function(e) {}
+			};
+		
+			// Cropper
+			$image.cropper(options);
+			
+			plus.nativeUI.closeWaiting();
+		}
+	</script>
+</html>
