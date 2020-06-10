@@ -63,6 +63,7 @@
 					time: 1000
 				});
 			} else {
+				plus.nativeUI.showWaiting("正在登录...")
 				// 与后端联调
 				mui.ajax(utils.serverIp + '/user/login', {
 					data: {
@@ -76,6 +77,7 @@
 						'Content-Type': 'application/json'
 					},
 					success: function(data) {
+						plus.nativeUI.closeWaiting()
 						//服务器返回响应，根据响应结果，分析是否登录成功；
 						console.log(JSON.stringify(data))
 						if (data.status == 500) {
@@ -94,6 +96,8 @@
 					},
 					error: function(xhr, type, errorThrown) {
 						//异常处理；
+						plus.nativeUI.closeWaiting()
+						plus.nativeUI.toast("登录失败...")
 					}
 				});
 			}

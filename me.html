@@ -57,7 +57,7 @@
 			<!-- 退出登录 -->
 			<ul class="mui-table-view">
 				<li class="mui-table-view-cell mui-media">
-					<a href="javascript:;">
+					<a id="a_logout" href="javascript:;">
 						<div class="mui-media-body" style="text-align: center;">
 							退出登录
 						</div>
@@ -103,6 +103,14 @@
 				a_qrcode.addEventListener("tap",function(){
 					mui.openWindow("me-qrcode.html","me-qrcode")
 				})
+				
+				// 退出登录
+				var a_logout = document.getElementById("a_logout")
+				a_logout.addEventListener("tap",function(){
+					utils.removeUserInfo()
+					mui.openWindow("portal.html","portal")
+				})
+				
 			});
 
 			// 添加自定义事件，刷新头像
