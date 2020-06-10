@@ -110,7 +110,6 @@
 							if (data.status == 200) {
 								// 更新用户的缓存
 								var userInfo = data.data;
-								utils.removeUserInfo();
 								utils.setUserInfo(userInfo)
 								console.log(JSON.stringify(data))
 								

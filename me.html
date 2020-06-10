@@ -42,7 +42,7 @@
 					</a>
 				</li>
 				<li class="mui-table-view-cell mui-media">
-					<a href="javascript:;">
+					<a id="a_qrcode" href="javascript:;">
 						<span class="mui-pull-right mui-icon mui-icon-arrowright" style="margin-left: 3px;"></span>
 						<img class="mui-media-object mui-pull-right" src="images/qrcode.png" style="width: 20px;height: 20px;">
 						<div class="mui-media-body">
@@ -98,6 +98,11 @@
 					mui.openWindow("me-nickname.html","me-nickname")
 				})
 				
+				// 打开我的二维码页面
+				var a_qrcode = document.getElementById("a_qrcode")
+				a_qrcode.addEventListener("tap",function(){
+					mui.openWindow("me-qrcode.html","me-qrcode")
+				})
 			});
 
 			// 添加自定义事件，刷新头像
@@ -119,8 +124,8 @@
 					span_nickname.innerHTML = nickname;
 					// 刷新用户头像
 					var faceImg = userInfo.faceImg;
+					var img_my_face = document.getElementById("img_my_face")
 					if (!utils.isNull(faceImg)) {
-						var img_my_face = document.getElementById("img_my_face")
 						img_my_face.src = faceImg
 					}else{
 						img_my_face.src = "images/face.jpg"
