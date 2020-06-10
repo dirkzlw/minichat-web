@@ -37,4 +37,5 @@ window.utils = {
 		plus.storage.removeItem("userInfo")
 	}
 	
+	
 }

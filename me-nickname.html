@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+	<!-- 个人信息-修改昵称页面 -->
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/header.css" rel="stylesheet" />
+	</head>
+
+	<body>
+
+		<!-- 标题 -->
+		<header class="mui-bar mui-bar-nav title">
+			<!-- 返回键 -->
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left title-text"></a>
+			<h1 class="mui-title title-text" style="position:relative;left:8px;font-size: 20px;">昵称</h1>
+			<!-- 菜单键 -->
+			<a id="a_confirm" class="mui-icon mui-pull-right title-text" style="line-height: 30px;font-size: 15px;">确定</a>
+		</header>
+
+		<div class="mui-content">
+			<div class="mui-input-row">
+				<input id="input_nickname" type="text" class="mui-input-speech mui-input-clear" placeholder="修改昵称">
+				<span style="font-size: 14px;color: gray;margin-left: 10px;">好的名字可以让你的朋友更容易记住你。</span>
+			</div>
+			
+		</div>
+
+	</body>
+	<script src="js/utils.js"></script>
+	<script src="js/mui.min.js"></script>
+	<script type="text/javascript">
+		mui.init()
+		mui.plusReady(function() {
+			// 回显原昵称
+			var input_nickname =  document.getElementById("input_nickname");
+			var userInfo = utils.getUserInfo();
+			input_nickname.value = userInfo.nickname
+			// 监听确定按钮
+			var a_confirm = document.getElementById("a_confirm")
+			a_confirm.addEventListener("tap",function(){
+				
+				var nickname =  input_nickname.value
+				
+				if(utils.isNull(nickname)){
+					plus.nativeUI.toast("昵称不能为空")
+				}else if(userInfo.nickname == nickname){
+					plus.nativeUI.toast("昵称未修改")
+				}else{
+					plus.nativeUI.showWaiting("请稍后...")
+					mui.ajax(utils.serverIp+ "/user/reset/nickname",{
+						data:{
+							userId:userInfo.userId,
+							nickname:nickname
+						},
+						dataType:'json',//服务器返回json格式数据
+						type:'post',//HTTP请求类型
+						timeout:10000,//超时时间设置为10秒；
+						headers:{'Content-Type':'application/json'},	              
+						success:function(data){
+							
+							plus.nativeUI.closeWaiting();
+							
+							//服务器返回响应，根据响应结果，分析是否登录成功；
+							if (data.status == 200) {
+								// 登录或者注册成功之后，保存全局用户对象到本地缓存
+								utils.setUserInfo(data.data);
+								// 触发另外一个webview的自定义事件，可以使用 mui.fire()
+								var meWebview = plus.webview.getWebviewById("me");
+								mui.fire(meWebview, "refreshUserInfo");
+								
+								// 页面跳转
+								mui.back();
+							} else {
+								plus.nativeUI.toast(data.msg)
+							}
+						},
+						error : function(){
+							plus.nativeUI.closeWaiting()
+							plus.nativeUI.toast("请求失败，请稍后重试")
+						}
+					});
+				}
+				
+			})
+			
+		})
+	</script>
+
+</html>

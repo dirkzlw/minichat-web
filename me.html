@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-
+	<!-- 个人信息页面 -->
 	<head>
 		<meta charset="utf-8">
 		<title></title>
@@ -33,7 +33,7 @@
 					</a>
 				</li>
 				<li class="mui-table-view-cell mui-media">
-					<a href="javascript:;">
+					<a id="a_nickname" href="javascript:;">
 						<span class="mui-pull-right mui-icon mui-icon-arrowright"></span>
 						<span id="span_nickname" class="mui-pull-right" style="color: gray;font-size: 16px;"></span>
 						<div class="mui-media-body">
@@ -75,20 +75,29 @@
 
 				// 获取当前窗口的webview
 				var meWebview = plus.webview.currentWebview();
+				// 刷新用户信息
+				refreshUserInfo()
 				// 监听当前窗口的show方法，刷新用户信息
-				meWebview.addEventListener("show", function() {
-					refreshUserInfo()
-				})
+				// meWebview.addEventListener("show", function() {
+				// 	refreshUserInfo()
+				// })
 
 				// 打开我的头像页面，新建窗口，以免出现原有头像的Bug
 				var a_face_img = document.getElementById("a_face_img")
 				a_face_img.addEventListener("tap", function() {
 					mui.openWindow({
-						url : "face-img.html",
-						id : "face-img",
+						url : "me-face.html",
+						id : "me-face",
 						createNew : true
 					});
 				});
+				
+				// 打开修改昵称页面
+				var a_nickname = document.getElementById("a_nickname")
+				a_nickname.addEventListener("tap",function(){
+					mui.openWindow("me-nickname.html","me-nickname")
+				})
+				
 			});
 
 			// 添加自定义事件，刷新头像

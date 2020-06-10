@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-	<!-- 个人头像页面 -->
+	<!-- 个人信息-个人头像页面 -->
 	<head>
 		<meta charset="utf-8">
 		<title></title>
@@ -10,7 +10,7 @@
 	</head>
 
 	<body style="background-color: black;">
-		
+
 		<!-- 标题 -->
 		<header class="mui-bar mui-bar-nav title">
 			<!-- 返回键 -->
@@ -19,141 +19,139 @@
 			<!-- 菜单键 -->
 			<a id="menu" class="mui-icon mui-pull-right title-text">...</a>
 		</header>
-		
+
 		<!-- 主体，头像上边距100px，背景颜色为黑色 -->
 		<div class="mui-content" id="div_img_myface" style="background-color: black;">
-			<img id="img_myface" src=""/>
+			<img id="img_myface" src="" />
 		</div>
-		
+
 		<!-- 菜单栏 -->
 		<div id="sheet" class="mui-popover mui-popover-bottom mui-popover-action ">
 			<!-- 可选择菜单 -->
 			<ul class="mui-table-view">
-			  <li class="mui-table-view-cell">
-				<a id="a_choose" href="#">从手机相册选择</a>
-			  </li>
-			  <li class="mui-table-view-cell">
-				<a id="a_download" href="#">保存到手机</a>
-			  </li>
+				<li class="mui-table-view-cell">
+					<a id="a_choose" href="#">从手机相册选择</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a id="a_download" href="#">保存到手机</a>
+				</li>
 			</ul>
 			<!-- 取消菜单 -->
 			<ul class="mui-table-view">
-			  <li class="mui-table-view-cell">
-				<a href="#sheet"><b>取消</b></a>
-			  </li>
+				<li class="mui-table-view-cell">
+					<a href="#sheet"><b>取消</b></a>
+				</li>
 			</ul>
 		</div>
-		
+
 	</body>
 	<script src="js/utils.js"></script>
 	<script src="js/mui.min.js"></script>
 	<script type="text/javascript">
 		mui.init()
-		mui.plusReady(function(){
-			
+		mui.plusReady(function() {
+
 			// 显示用户头像
 			var userInfo = utils.getUserInfo();
 			var img_myface = document.getElementById("img_myface");
-			if(!utils.isNull(userInfo)){
+			if (!utils.isNull(userInfo)) {
 				// 设置头像宽高
-				var clientWidth = document.body.clientWidth;		// 获取手机可见宽度
+				var clientWidth = document.body.clientWidth; // 获取手机可见宽度
 				img_myface.width = clientWidth;
 				img_myface.height = clientWidth;
 				// 设置头像上边距
-				var clientHeight = document.body.clientHeight;		// 获取手机可见宽度
-				var marginTop = (clientHeight-clientWidth + 160) / 2;
-				document.getElementById("div_img_myface").style.marginTop = marginTop+"px";
+				var clientHeight = document.body.clientHeight; // 获取手机可见宽度
+				var marginTop = (clientHeight - clientWidth + 160) / 2;
+				document.getElementById("div_img_myface").style.marginTop = marginTop + "px";
 				// 设置头像，显示用户远程头像或本地默认头像
 				var faceImgBig = userInfo.faceImgBig;
-				if(!utils.isNull(faceImgBig)){
+				if (!utils.isNull(faceImgBig)) {
 					// 展示头像的大图
 					img_myface.src = faceImgBig
-				}else{
+				} else {
 					img_myface.src = "images/face.jpg"
 				}
 			}
-			
+
 			// 双击放大图片
-			var date1=null;
+			var date1 = null;
 			var bigFlag = false;
 			var bigRate = 1.5;
-			img_myface.addEventListener("tap",function(){
+			img_myface.addEventListener("tap", function() {
 				if (date1 == null) {
 					date1 = new Date().getTime();
 					setTimeout(function() {
 						date1 = null;
 					}, 1000);
 				} else if (new Date().getTime() - date1 < 1000) {
-					if (bigFlag){
+					if (bigFlag) {
 						img_myface.width = img_myface.width / bigRate
 						img_myface.height = img_myface.height / bigRate
 						bigFlag = false
-					}else{
+					} else {
 						img_myface.width = img_myface.width * bigRate
 						img_myface.height = img_myface.height * bigRate
 						bigFlag = true
 					}
 				}
 			})
-			
+
 			// 监听菜单栏
 			var menu = document.getElementById("menu")
-			menu.addEventListener("tap",function(){
+			menu.addEventListener("tap", function() {
 				mui('#sheet').popover('toggle');
 			})
-			
+
 			// 监听从手机选择照片
 			var a_choose = document.getElementById("a_choose")
-			a_choose.addEventListener("tap",function(){
+			a_choose.addEventListener("tap", function() {
 				mui.openWindow({
-					url : "plugin/v3.1.6/myface-uploader.html",
-					id : "myface-uploader",
-					createNew : true
+					url: "plugin/v3.1.6/face-uploader.html",
+					id: "face-uploader",
+					createNew: true
 				})
 				mui('#sheet').popover('toggle');
 			})
-			
+
 			// 监听保存到手机
 			var a_download = document.getElementById("a_download")
-			a_download.addEventListener("tap",function(){
-				
+			a_download.addEventListener("tap", function() {
+
 				plus.nativeUI.showWaiting("下载中...")
-				
+
 				// 创建下载任务,需要启动
 				console.log(userInfo.faceImgBig)
 				plus.downloader.createDownload(
-				userInfo.faceImgBig, 
-				{}, 
-				function(d, status){
-					plus.nativeUI.closeWaiting();
-					// 下载完成
-					if(status == 200){ 
-						console.log("Download success: " + d.filename);
-						plus.gallery.save(d.filename,function(){
-							plus.nativeUI.toast("保存头像成功")
-						})
-						
-					} else {
-						plus.nativeUI.toast("下载失败，请检查网络")
-						console.log("Download failed: " + status); 
-					}  
-				}).start();
-				
+					userInfo.faceImgBig, {},
+					function(d, status) {
+						plus.nativeUI.closeWaiting();
+						// 下载完成
+						if (status == 200) {
+							console.log("Download success: " + d.filename);
+							plus.gallery.save(d.filename, function() {
+								plus.nativeUI.toast("保存头像成功")
+							})
+
+						} else {
+							plus.nativeUI.toast("下载失败，请检查网络")
+							console.log("Download failed: " + status);
+						}
+					}).start();
+
 				mui('#sheet').popover('toggle');
-				
+
 			})
-			
+
 		})
-		
+
 		// 监听返回键
 		mui.back = function() {
 			mui.openWindow({
-				url : "index.html",
-				id : "index",
-				createNew : false
+				url: "index.html",
+				id: "index",
+				createNew: false
 			})
 		}
-		
 	</script>
 
 </html>
