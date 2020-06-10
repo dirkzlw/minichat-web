@@ -116,7 +116,31 @@
 			// 监听保存到手机
 			var a_download = document.getElementById("a_download")
 			a_download.addEventListener("tap",function(){
-				alert("保存到手机")
+				
+				plus.nativeUI.showWaiting("下载中...")
+				
+				// 创建下载任务,需要启动
+				console.log(userInfo.faceImgBig)
+				plus.downloader.createDownload(
+				userInfo.faceImgBig, 
+				{}, 
+				function(d, status){
+					plus.nativeUI.closeWaiting();
+					// 下载完成
+					if(status == 200){ 
+						console.log("Download success: " + d.filename);
+						plus.gallery.save(d.filename,function(){
+							plus.nativeUI.toast("保存头像成功")
+						})
+						
+					} else {
+						plus.nativeUI.toast("下载失败，请检查网络")
+						console.log("Download failed: " + status); 
+					}  
+				}).start();
+				
+				mui('#sheet').popover('toggle');
+				
 			})
 			
 		})

@@ -1,5 +1,5 @@
 window.utils = {
-	serverIp : 'http://192.168.1.6:8080',
+	serverIp : 'http://192.168.1.7:8080',
 	/**
 	 * @param {Object} obj 判断obj是否为空
 	 * return treu : 空

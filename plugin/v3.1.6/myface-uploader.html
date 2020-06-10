@@ -60,11 +60,10 @@
 		
 		var $image = $('#image');
 		mui.plusReady(function() {
+			plus.nativeUI.showWaiting( "打开相册中..." );
 			
 			var userInfo = utils.getUserInfo()
 			var img_myface = document.getElementById("img_myface");
-			
-			plus.nativeUI.showWaiting( "打开相册中..." );
 			
 			/** ======================== 从相册选择图片 ======================== **/
 				plus.gallery.pick( function(path){
@@ -128,6 +127,10 @@
 							} else {
 								plus.nativeUI.toast(data.msg)
 							}
+						},
+						error : function(){
+							plus.nativeUI.closeWaiting()
+							plus.nativeUI.toast("上传失败，请稍后重试")
 						}
 					});
 				}
