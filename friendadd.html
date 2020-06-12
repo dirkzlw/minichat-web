@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+	<!-- 个人信息-修改昵称页面 -->
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/header.css" rel="stylesheet" />
+	</head>
+
+	<body>
+
+		<!-- 标题 -->
+		<header class="mui-bar mui-bar-nav title">
+			<!-- 返回键 -->
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left title-text"></a>
+			<h1 class="mui-title title-text" style="position:relative;left:8px;font-size: 20px;">添加好友</h1>
+			<!-- 菜单键 -->
+			<a id="a_search" class="mui-icon mui-pull-right title-text" style="line-height: 30px;font-size: 15px;">搜索</a>
+		</header>
+
+		<div class="mui-content">
+			<div class="mui-input-row">
+				<input id="input_username" type="text" class="mui-input-speech mui-input-clear" placeholder="请输入用户名">
+				<span style="font-size: 14px;color: gray;margin-left: 10px;">根据用户名搜索并添加好友。</span>
+			</div>
+
+		</div>
+
+	</body>
+	<script src="js/utils.js"></script>
+	<script src="js/mui.min.js"></script>
+	<script type="text/javascript">
+		mui.init()
+		mui.plusReady(function() {
+			// 监听确定按钮
+			document.getElementById("a_search").addEventListener("tap", function() {
+				var username = document.getElementById("input_username").value
+				var userInfo = utils.getUserInfo()
+				if (utils.isNull(username)) {
+					plus.nativeUI.toast("用户名不能为空")
+				} else {
+					plus.nativeUI.showWaiting("请稍后...")
+					var ajaxUrl = utils.serverIp + "/user/friend/search?userId=" + userInfo.userId +
+						"&friendUsername=" + username;
+					mui.ajax(ajaxUrl, {
+						data: {},
+						dataType: 'json', //服务器返回json格式数据
+						type: 'post', //HTTP请求类型
+						timeout: 10000, //超时时间设置为10秒；
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						success: function(data) {
+
+							plus.nativeUI.closeWaiting();
+
+							//服务器返回响应，根据响应结果，分析是否登录成功；
+							if (data.status == 200) {
+								
+								// 跳转至查询结果页面
+								mui.openWindow({
+									url : "friendadd-result.html",
+									id : "friendadd-result",
+									style : {},
+									extras : {
+										// 自定义参数
+										friend : data.data
+									}
+								})
+								
+							} else {
+								plus.nativeUI.toast(data.msg)
+							}
+						},
+						error: function() {
+							plus.nativeUI.closeWaiting()
+							plus.nativeUI.toast("服务器出错...")
+						}
+					});
+				}
+			})
+
+		})
+	</script>
+
+</html>

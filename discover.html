@@ -10,11 +10,39 @@
 
 	<body>
 		
-		<h1>发现</h1>
+		<ul class="mui-table-view">
+			<li class="mui-table-view-cell mui-media">
+				<a href="javascript:;">
+					<img class="mui-media-object mui-pull-left" src="images/icon-friendcircle.png">
+					<div class="mui-media-body" style="line-height: 40px;margin-left: 50px;">
+						朋友圈
+						<!-- 向右箭头 -->
+						<span class="mui-pull-right mui-icon mui-icon-arrowright" style="line-height: 40px;">
+					</div>
+				</a>
+			</li>
+		</ul>
+		
+		<br/>
+		
+		<ul class="mui-table-view">
+			<li class="mui-table-view-cell mui-media">
+				<a href="javascript:;">
+					<img class="mui-media-object mui-pull-left" src="images/icon-scan.png">
+					<div class="mui-media-body" style="line-height: 40px;margin-left: 50px;">
+						扫一扫
+						<span class="mui-pull-right mui-icon mui-icon-arrowright" style="line-height: 40px;">
+					</div>
+				</a>
+			</li>
+		</ul>
 		
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript">
 			mui.init()
+			mui.plusReady(function () {
+				
+			})
 		</script>
 	</body>
 

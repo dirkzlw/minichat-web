@@ -79,7 +79,6 @@
 					success: function(data) {
 						plus.nativeUI.closeWaiting()
 						//服务器返回响应，根据响应结果，分析是否登录成功；
-						console.log(JSON.stringify(data))
 						if (data.status == 500) {
 							layer.msg(data.msg, {
 								icon: 5,
@@ -91,13 +90,17 @@
 							var userInfo = data.data;
 							utils.setUserInfo(userInfo)
 							// 页面跳转
-							mui.openWindow("index.html", "index")
+							mui.openWindow({
+								url : "index.html", 
+								id : "index",
+								createNew : false
+							})
 						}
 					},
 					error: function(xhr, type, errorThrown) {
 						//异常处理；
 						plus.nativeUI.closeWaiting()
-						plus.nativeUI.toast("登录失败...")
+						plus.nativeUI.toast("服务器出错...")
 					}
 				});
 			}

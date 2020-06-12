@@ -28,6 +28,10 @@
 			<h1 class="mui-title title-text" style="position:relative;left:0px;font-size: 15px;">
 				微聊
 			</h1>
+			<!-- 添加好友图标 -->
+			<a id="a_friend_add" class="mui-icon mui-pull-right title-text">
+				<img src="images/icon-friendadd.png" style="width: 25px;"/>
+			</a>
 		</header>
 
 		<!-- 底部选项卡 -->
@@ -80,6 +84,15 @@
 		// 添加页面
 		mui.plusReady(function() {
 
+			// 获取当前窗口的webview
+			var meWebview = plus.webview.currentWebview();
+			// 监听当前窗口的show方法，刷新用户信息
+			meWebview.addEventListener("show", function() {
+				// 刷新me.html
+				var meWebview = plus.webview.getWebviewById("me");
+				mui.fire(meWebview, "refreshUserInfo");
+			})
+
 			// 获取当前webview对象
 			var indexWebview = plus.webview.currentWebview()
 			// 对当前webview追加子页的webview对象
@@ -94,7 +107,12 @@
 			plus.webview.show(pageArr[0].id)
 		})
 
-		// 监听tab触摸事件
+		// 监听添加好友按钮
+		document.getElementById("a_friend_add").addEventListener("tap",function(){
+			mui.openWindow("friendadd.html","friendadd")
+		})
+		
+		// 监听底部触摸事件
 		mui(".mui-bar-tab").on('tap', '.mui-tab-item', function() {
 			var tabindex = this.getAttribute("tabindex");
 			// 显示此tab对应的子页

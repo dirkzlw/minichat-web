@@ -39,5 +39,19 @@
 			}
 
 		});
+		
+		// 2秒内，两次按返回键退出应用
+		var first = null;
+		mui.back = function() {
+			if (utils.isNull(first)) {
+				first = new Date().getTime();
+				mui.toast('再按一次退出应用');
+				setTimeout(function() {
+					first = null;
+				}, 2000);
+			} else if (new Date().getTime() - first < 2000) {
+				plus.runtime.quit();
+			}
+		}
 	</script>
 </html>

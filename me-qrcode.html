@@ -46,7 +46,11 @@
 			var userInfo = utils.getUserInfo()
 			
 			var img_myface = document.getElementById("img_myface")
-			img_myface.src = userInfo.faceImg;
+			if(!utils.isNull(userInfo.faceImg)){
+				img_myface.src = userInfo.faceImg;
+			}else{
+				img_myface.src = "images/face.jpg"
+			}
 			var lab_nickname = document.getElementById("lab_nickname")
 			lab_nickname.innerHTML = userInfo.nickname;
 			var img_qrcode = document.getElementById("img_qrcode")
