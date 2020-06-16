@@ -18,87 +18,86 @@
 		</style>
 	</head>
 
-	<body >
+	<body>
 
 		<header class="mui-bar mui-bar-nav title" style="position: fixed;">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left title-color"></a>
 			<h1 class="mui-title title-color"><b id="chatting-nickname">详细资料</b></h1>
 		</header>
-		
+
 		<div class="mui-content">
-			
+
 			<ul class="mui-table-view">
-			    <li class="mui-table-view-cell mui-media" style="padding-top: 10px;">
-			        <a href="javascript:;">
-			            <img id="img_friend_face" class="mui-media-object mui-pull-left" src="" 
-			            	style="border-radius: 8%;line-height: 50px;max-width: 50px;height: 50px;">
-			            <div class="mui-media-body">
-			               	<label id="lab_friend_username"></label>
-			                <p id="p_friend_nickname" class="mui-ellipsis"></p>
-			            </div>
-			        </a>
-			    </li>
+				<li class="mui-table-view-cell mui-media" style="padding-top: 10px;">
+					<a href="javascript:;">
+						<img id="img_friend_face" class="mui-media-object mui-pull-left" src="" style="border-radius: 8%;line-height: 50px;max-width: 50px;height: 50px;">
+						<div class="mui-media-body">
+							<label id="lab_friend_username"></label>
+							<p id="p_friend_nickname" class="mui-ellipsis"></p>
+						</div>
+					</a>
+				</li>
 			</ul>
-			
+
 			<br />
 			<div style="text-align: center;">
-				<button id="btn_add_friend" type="button" class="mui-btn mui-btn-block" 
-					style="color: white;width: 90%;display: inline;padding: 12px 0">添加好友</button>
-				<button id="btn_back" type="button" class="mui-btn mui-btn-block" 
-					style="width: 90%;display: inline;padding: 12px 0">返回</button>
+				<button id="btn_add_friend" type="button" class="mui-btn mui-btn-block" style="color: white;width: 90%;display: inline;padding: 12px 0">添加好友</button>
+				<button id="btn_back" type="button" class="mui-btn mui-btn-block" style="width: 90%;display: inline;padding: 12px 0">返回</button>
 			</div>
-			
+
 		</div>
-		
+
 		<script type="application/javascript" src="js/utils.js"></script>
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript">
 			mui.init();
-			
-			mui.plusReady(function(){
-				
+
+			mui.plusReady(function() {
+
 				var userInfo = utils.getUserInfo();
-				
+
 				// 获取上一个页面传入的对象，并且对本页面响应的dom赋值初始化
 				var currnetWebview = plus.webview.currentWebview();
 				var friend = currnetWebview.friend;
-				
+
 				var img_friend_face = document.getElementById("img_friend_face");
 				var lab_friend_username = document.getElementById("lab_friend_username");
 				var p_friend_nickname = document.getElementById("p_friend_nickname");
-				
-				if(utils.isNull(friend.faceImg)){
+
+				if (utils.isNull(friend.faceImg)) {
 					img_friend_face.src = "images/face.jpg"
-				}else{
+				} else {
 					img_friend_face.src = friend.faceImg;
 				}
-				
+
 				lab_friend_username.innerHTML = friend.username;
 				p_friend_nickname.innerHTML = "用户昵称：" + friend.nickname;
-				
+
 				// 发送添加好友的请求
 				var btn_add_friend = document.getElementById("btn_add_friend");
-				btn_add_friend.addEventListener("tap", function(){
-					
+				btn_add_friend.addEventListener("tap", function() {
+
 					plus.nativeUI.showWaiting("请稍后...");
 					var ajaxUrl = utils.serverIp + "/user/friend/add?userId=" + userInfo.userId +
 						"&friendUsername=" + friend.username;
 					mui.ajax(ajaxUrl, {
-						data:{},
-						dataType:'json',//服务器返回json格式数据
-						type:'post',//HTTP请求类型
-						timeout:10000,//超时时间设置为10秒；
-						headers:{'Content-Type':'application/json'},	              
-						success:function(data){
+						data: {},
+						dataType: 'json', //服务器返回json格式数据
+						type: 'post', //HTTP请求类型
+						timeout: 10000, //超时时间设置为10秒；
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						success: function(data) {
 							//服务器返回响应
 							plus.nativeUI.closeWaiting();
-							
+
 							if (data.status == 200) {
-								
+
 								plus.nativeUI.toast("好友请求发送成功")
-								
+
 								mui.back();
-								
+
 							} else {
 								plus.nativeUI.toast(data.msg)
 							}
@@ -108,9 +107,9 @@
 							plus.nativeUI.toast("服务器出错...")
 						}
 					});
-					
+
 				});
-				
+
 				// 绑定返回的函数
 				document.getElementById("btn_back").addEventListener("tap", function() {
 					mui.back();
