@@ -5,8 +5,8 @@
 		<meta charset="UTF-8">
 		<title></title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<link href="css/mui.min.css" rel="stylesheet" />
-		<link rel="stylesheet" type="text/css" href="css/header.css" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../css/header.css" />
 
 		<style>
 			#btn_add_friend {
@@ -21,8 +21,8 @@
 	<body>
 
 		<header class="mui-bar mui-bar-nav title" style="position: fixed;">
-			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left title-color"></a>
-			<h1 class="mui-title title-color"><b id="chatting-nickname">详细资料</b></h1>
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left title-text"></a>
+			<h1 class="mui-title title-text"><b id="chatting-nickname">详细资料</b></h1>
 		</header>
 
 		<div class="mui-content">
@@ -47,8 +47,8 @@
 
 		</div>
 
-		<script type="application/javascript" src="js/utils.js"></script>
-		<script src="js/mui.min.js"></script>
+		<script type="application/javascript" src="../js/utils.js"></script>
+		<script src="../js/mui.min.js"></script>
 		<script type="text/javascript">
 			mui.init();
 
@@ -65,7 +65,7 @@
 				var p_friend_nickname = document.getElementById("p_friend_nickname");
 
 				if (utils.isNull(friend.faceImg)) {
-					img_friend_face.src = "images/face.jpg"
+					img_friend_face.src = "../images/face.jpg"
 				} else {
 					img_friend_face.src = friend.faceImg;
 				}

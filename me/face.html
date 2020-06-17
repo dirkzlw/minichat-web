@@ -5,8 +5,8 @@
 		<meta charset="utf-8">
 		<title></title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<link href="css/mui.min.css" rel="stylesheet" />
-		<link href="css/header.css" rel="stylesheet" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link href="../css/header.css" rel="stylesheet" />
 	</head>
 
 	<body style="background-color: black;">
@@ -45,8 +45,8 @@
 		</div>
 
 	</body>
-	<script src="js/utils.js"></script>
-	<script src="js/mui.min.js"></script>
+	<script src="../js/utils.js"></script>
+	<script src="../js/mui.min.js"></script>
 	<script type="text/javascript">
 		mui.init()
 		mui.plusReady(function() {
@@ -69,7 +69,7 @@
 					// 展示头像的大图
 					img_myface.src = faceImgBig
 				} else {
-					img_myface.src = "images/face.jpg"
+					img_myface.src = "../images/face.jpg"
 				}
 			}
 
@@ -106,7 +106,7 @@
 			var a_choose = document.getElementById("a_choose")
 			a_choose.addEventListener("tap", function() {
 				mui.openWindow({
-					url: "plugin/v3.1.6/face-uploader.html",
+					url: "../plugin/v3.1.6/face-uploader.html",
 					id: "face-uploader",
 					createNew: true
 				})

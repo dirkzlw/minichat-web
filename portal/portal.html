@@ -5,14 +5,16 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="viewport" content="width=device-width, maximum-scale=1.0, initial-scale=1.0, user-scalable=0" />
 		<title></title>
-		<link type="text/css" rel="stylesheet" href="css/style.css">
-		<script type="text/javascript" src="js/banner.js"></script>
+		<link type="text/css" rel="stylesheet" href="../css/style.css">
+		<script type="text/javascript" src="../js/banner.js"></script>
 		<style type="text/css">
 			body {
-				background-image: url(images/banner.jpeg);
-				width: 100%;
-				height: 100%;
-				background-size: 100%;
+				background-image: url(../images/banner.jpeg);
+				background-attachment:fixed;
+				background-repeat:no-repeat;
+				background-size:cover;
+				-moz-background-size:cover;
+				-webkit-background-size:cover;
 			}
 		</style>
 	</head>
@@ -24,8 +26,8 @@
 		</div>
 	</body>
 	<!-- 自定义工具类 -->
-	<script src="js/utils.js"></script>
-	<script src="js/mui.min.js"></script>
+	<script src="../js/utils.js"></script>
+	<script src="../js/mui.min.js"></script>
 	<script type="text/javascript" charset="utf-8">
 		mui.plusReady(function() {
 			// 修改手机通知栏背景和字体颜色
@@ -35,7 +37,7 @@
 			// 自动登录
 			var userInfo = utils.getUserInfo()
 			if (userInfo != null) {
-				mui.openWindow("index.html", "index");
+				mui.openWindow("../index.html", "index");
 			}
 
 		});

@@ -5,8 +5,8 @@
 		<meta charset="utf-8">
 		<title></title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<link href="css/mui.min.css" rel="stylesheet" />
-		<link href="css/header.css" rel="stylesheet" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link href="../css/header.css" rel="stylesheet" />
 	</head>
 
 	<body>
@@ -18,7 +18,7 @@
 			<h1 class="mui-title title-text" style="position:relative;left:8px;font-size: 20px;">我的二维码</h1>
 			<!-- 菜单键 -->
 			<a id="a_download" class="mui-icon mui-pull-right title-text" >
-				<img src="images/download.png" style="width: 25px;margin-top: 8px;"/>
+				<img src="../images/download.png" style="width: 25px;margin-top: 8px;"/>
 			</a>
 		</header>
 
@@ -37,8 +37,8 @@
 		</div>
 
 	</body>
-	<script src="js/utils.js"></script>
-	<script src="js/mui.min.js"></script>
+	<script src="../js/utils.js"></script>
+	<script src="../js/mui.min.js"></script>
 	<script type="text/javascript">
 		mui.init()
 		mui.plusReady(function() {
@@ -49,7 +49,7 @@
 			if(!utils.isNull(userInfo.faceImg)){
 				img_myface.src = userInfo.faceImg;
 			}else{
-				img_myface.src = "images/face.jpg"
+				img_myface.src = "../images/face.jpg"
 			}
 			var lab_nickname = document.getElementById("lab_nickname")
 			lab_nickname.innerHTML = userInfo.nickname;
