@@ -64,12 +64,7 @@
 				var lab_friend_username = document.getElementById("lab_friend_username");
 				var p_friend_nickname = document.getElementById("p_friend_nickname");
 
-				if (utils.isNull(friend.faceImg)) {
-					img_friend_face.src = "../images/face.jpg"
-				} else {
-					img_friend_face.src = friend.faceImg;
-				}
-
+				img_friend_face.src = friend.faceImg;
 				lab_friend_username.innerHTML = friend.username;
 				p_friend_nickname.innerHTML = "用户昵称：" + friend.nickname;
 

@@ -65,12 +65,7 @@
 				document.getElementById("div_img_myface").style.marginTop = marginTop + "px";
 				// 设置头像，显示用户远程头像或本地默认头像
 				var faceImgBig = userInfo.faceImgBig;
-				if (!utils.isNull(faceImgBig)) {
-					// 展示头像的大图
-					img_myface.src = faceImgBig
-				} else {
-					img_myface.src = "../images/face.jpg"
-				}
+				img_myface.src = faceImgBig
 			}
 
 			// 双击放大图片

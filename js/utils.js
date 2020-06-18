@@ -30,12 +30,34 @@ window.utils = {
 	},
 	
 	/**
-	 * 删除指定键值的缓存
-	 * @param {Object} key
+	 * 删除用户信息的缓存
 	 */	
 	removeUserInfo : function(){
 		plus.storage.removeItem("userInfo")
-	}
+	},
 	
+	/**
+	 * 将好友列表保存在客户端的缓存中
+	 * @param {Object} user
+	 */
+	setFriendList : function(friendList) {
+		var friendListJsonStr = JSON.stringify(friendList)
+		plus.storage.setItem("friendList",friendListJsonStr)
+	},
+	
+	/**
+	 * 获取缓存中的好友列表
+	 */
+	getFriendList : function(){
+		var friendListJsonStr = plus.storage.getItem("friendList");
+		return JSON.parse(friendListJsonStr)
+	},
+	
+	/**
+	 * 删除好友信息列表的缓存
+	 */	
+	removeFriendListJsonStr : function(){
+		plus.storage.removeItem("friendList")
+	}
 	
 }
