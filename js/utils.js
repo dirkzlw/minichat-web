@@ -58,6 +58,29 @@ window.utils = {
 	 */	
 	removeFriendListJsonStr : function(){
 		plus.storage.removeItem("friendList")
+	},
+	
+	/**
+	 * 弹出提示信息
+	 * @param {Object} msg
+	 */
+	showToast : function(msg){
+		plus.nativeUI.toast(msg);
+	},
+	
+	/**
+	 * 弹出等待框
+	 * @param {Object} msg
+	 */
+	showWaiting : function(msg){
+		plus.nativeUI.showWaiting(msg);
+	},
+	
+	/**
+	 * 关闭等待框
+	 */
+	closeWaiting : function(){
+		plus.nativeUI.closeWaiting()
 	}
 	
 }

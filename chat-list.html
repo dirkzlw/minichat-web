@@ -20,6 +20,12 @@
 			mui.init()
 			
 			mui.plusReady(function() {
+				
+				// 添加自定义事件，刷新页面
+				window.addEventListener("initChatListPage", function(){
+					loadFriendRequests();
+				});
+				
 				// 获取当前窗口的webview
 				var thisWebview = plus.webview.currentWebview();
 				
@@ -71,11 +77,11 @@
 							});
 			
 						} else {
-							plus.nativeUI.toast(data.msg)
+							utils.showToast(data.msg)
 						}
 					},
 					error: function() {
-						plus.nativeUI.toast("服务器出错...")
+						utils.showToast("服务器发生错误")
 					}
 				});
 			}
@@ -97,16 +103,21 @@
 					headers:{'Content-Type':'application/json'},	              
 					success:function(data){
 						if (data.status == 200) {
-							plus.nativeUI.toast("操作成功")
+							
+							if(replyType == 0){
+								utils.showToast("忽略好友请求成功")
+							}else if(replyType == 1){
+								utils.showToast("通过好友请求成功")
+							}
 							
 							// 重新加载好友请求记录
 							loadFriendRequests();
 						}else{
-							plus.nativeUI.toast(data.msg)
+							utils.showToast(data.msg)
 						}
 					},
 					error:function(){
-						plus.nativeUI.toast("服务器出错...")
+						utils.showToast("服务器发生错误")
 					}
 				});
 			}

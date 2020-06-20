@@ -78,11 +78,16 @@
 
 			mui.plusReady(function() {
 
+				// 添加自定义事件，刷新头像
+				window.addEventListener("initMePage", function(){
+					initMePage();
+				});
+
 				// 获取当前窗口的webview
 				var meWebview = plus.webview.currentWebview();
 				// 监听当前窗口的show方法，刷新用户信息
 				meWebview.addEventListener("show", function() {
-					refreshUserInfo()
+					initMePage()
 				})
 
 				// 打开我的头像页面，新建窗口，以免出现原有头像的Bug
@@ -110,25 +115,21 @@
 				// 退出登录
 				var a_logout = document.getElementById("a_logout")
 				a_logout.addEventListener("tap",function(){
+					// 清空用户信息和好友信息的缓存
 					utils.removeUserInfo()
+					utils.removeFriendListJsonStr()
 					mui.openWindow({
 						url : "portal/portal.html",
 						id : "portal",
 						createNew : true
 					})
 				})
-				
-			});
-
-			// 添加自定义事件，刷新头像
-			window.addEventListener("refreshUserInfo", function(){
-				refreshUserInfo();
 			});
 
 			// 刷新用户信息
-			function refreshUserInfo() {
+			function initMePage() {
 				var userInfo = utils.getUserInfo();
-				console.log(JSON.stringify(userInfo))
+				console.log("me.initMePage" + JSON.stringify(userInfo))
 				if (!utils.isNull(userInfo)) {
 					// 刷新用户名和昵称
 					var username = userInfo.username;

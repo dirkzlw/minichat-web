@@ -39,9 +39,9 @@
 				var username = document.getElementById("input_username").value
 				var userInfo = utils.getUserInfo()
 				if (utils.isNull(username)) {
-					plus.nativeUI.toast("用户名不能为空")
+					utils.showToast("用户名不能为空")
 				} else {
-					plus.nativeUI.showWaiting("请稍后...")
+					utils.showWaiting("请稍后...")
 					var ajaxUrl = utils.serverIp + "/user/friend/search?userId=" + userInfo.userId +
 						"&friendUsername=" + username;
 					mui.ajax(ajaxUrl, {
@@ -54,7 +54,7 @@
 						},
 						success: function(data) {
 
-							plus.nativeUI.closeWaiting();
+							utils.closeWaiting();
 
 							//服务器返回响应，根据响应结果，分析是否登录成功；
 							if (data.status == 200) {
@@ -71,12 +71,12 @@
 								})
 								
 							} else {
-								plus.nativeUI.toast(data.msg)
+								utils.showToast(data.msg)
 							}
 						},
 						error: function() {
-							plus.nativeUI.closeWaiting()
-							plus.nativeUI.toast("服务器出错...")
+							utils.closeWaiting();
+							utils.showToast("服务器发生错误")
 						}
 					});
 				}

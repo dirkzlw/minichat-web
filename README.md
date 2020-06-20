@@ -10,9 +10,9 @@
 	2、注册界面register.html<br/>
 	3、登录界面login.html<br/>
 	4、个人信息窗口me.html<br/>
-		4.1、头像大图的页面me-face.html<br/>
-		4.2、裁剪头像页面face-uploader.html<br/>
-		4.3、昵称修改页面me-nickname.html<br/>
+	&nbsp;4.1、头像大图的页面me-face.html<br/>
+	&nbsp;4.2、裁剪头像页面face-uploader.html<br/>
+	&nbsp;4.3、昵称修改页面me-nickname.html<br/>
 	5、聊天列表窗口chat-list.html<br/>
 	6、联系人列表窗口contact.html<br/>
 	7、发现窗口discover.html<br/>
@@ -32,4 +32,7 @@
 	11、完成用户"忽略/通过"好友请求<br/>
 	12、完成扫描搜索好友<br/>
 	13、完成加载用户好友列表<br/>
+	14、完成静态聊天页面<br/>
+	15、在utils.js中封装弹框的方法<br/>
+	
 	

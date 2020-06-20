@@ -50,6 +50,7 @@
 					<a>X</a>
 					<a>Y</a>
 					<a>Z</a>
+					<a>#</a>
 				</div>
 				<div class="mui-indexed-list-alert"></div>
 				<div class="mui-indexed-list-inner">
@@ -75,12 +76,14 @@
 
 			mui.plusReady(function() {
 
-				// 加载好友列表
-				loadMyFriendList()
+				// 添加自定义事件，刷新头像
+				window.addEventListener("initContactPage", function(){
+					initContactPage();
+				});
 
 				// 获取当前窗口的webview
 				plus.webview.currentWebview().addEventListener("show", function() {
-
+					
 					// 获取本地好友信息列表的缓存，并展示在页面
 					renderFriendList()
 
@@ -88,8 +91,19 @@
 					showContactList()
 
 				})
+				
 			})
-
+			
+			
+			// 初始化页面
+			function initContactPage(){
+				// 清空好友列表
+				document.getElementById("ul_friend_list").innerHTML = "";
+				
+				// 从后台加载好友列表
+				loadMyFriendList()
+			}
+			
 			// 26个字母外加 # 号
 			var engWords = [
 				'A', 'B', 'C', 'D', 'E', 'F', 'G',
@@ -100,10 +114,10 @@
 			]
 
 			var myFriendArr = [
-					[],[],[],[],[],[],[],[],[],
-					[],[],[],[],[],[],[],[],[],
-					[],[],[],[],[],[],[],[],[]
-				]
+				[],[],[],[],[],[],[],[],[],
+				[],[],[],[],[],[],[],[],[],
+				[],[],[],[],[],[],[],[],[]
+			]
 
 			function clearMyFriendArr(){
 				myFriendArr = [
@@ -116,45 +130,66 @@
 			// 获取本地好友信息列表的缓存，并展示在页面
 			function renderFriendList() {
 				var friendList = utils.getFriendList()
-
-				for (var i = 0; i < friendList.length; i++) {
-					var friend = friendList[i];
-					// 获取用户昵称的拼音
-					var nicknamePinyin = ch.convertPinyin(friend.nickname)
-					// 截取首字母的拼音 A--Z  ： 65-90   #  ： 35
-					var firstChar = nicknamePinyin.substr(0, 1).toUpperCase()
-					// 获取对应字符的ascii值，转换为数据下标
-					var asciiChar = firstChar.charCodeAt();
-					if (asciiChar < 65 || asciiChar > 90) {
-						asciiChar = 91
-					}
-					asciiChar -= 65;
-					// 将好友信息加入对应下标的数组
-					myFriendArr[asciiChar].push(friend);
-					
-				}
 				
-				// 进行html渲染
-				var myFriendListHtml = ""
-				for (var i = 0 ; i < myFriendArr.length ; i ++ ) {
-					var friendArray = myFriendArr[i];
-					if (friendArray.length > 0) {
-						myFriendListHtml += '<li data-group="' + engWords[i] + '" class="mui-table-view-divider mui-indexed-list-group">' + engWords[i] + '</li>';
-						for (var j = 0 ; j < friendArray.length ; j ++ ) {
-							myFriendListHtml += '' +
-										'<li friendId="' + friendArray[j].userId + '" friendNickname="' + friendArray[j].nickname + '" friendFaceImg="' + friendArray[j].faceImg + '" class="mui-media mui-table-view-cell mui-indexed-list-item" style="padding: 8px 10px;">' +
-											'<img class="mui-media-object mui-pull-left" style="max-width: 40px;height: 40px;" src="' + friendArray[j].faceImg + '"/>' +
-											'<div class="mui-media-body" style="line-height: 40px;">' + friendArray[j].nickname + '</div>' +
-										'</li>';
+				if(!utils.isNull(friendList)){
+					for (var i = 0; i < friendList.length; i++) {
+						var friend = friendList[i];
+						// 获取用户昵称的拼音
+						var nicknamePinyin = ch.convertPinyin(friend.nickname)
+						// 截取首字母的拼音 A--Z  ： 65-90   #  ： 35
+						var firstChar = nicknamePinyin.substr(0, 1).toUpperCase()
+						// 获取对应字符的ascii值，转换为数据下标
+						var asciiChar = firstChar.charCodeAt();
+						if (asciiChar < 65 || asciiChar > 90) {
+							asciiChar = 91
+						}
+						asciiChar -= 65;
+						// 将好友信息加入对应下标的数组
+						myFriendArr[asciiChar].push(friend);
+						
+					}
+					
+					// 进行html渲染
+					var myFriendListHtml = ""
+					for (var i = 0 ; i < myFriendArr.length ; i ++ ) {
+						var friendArray = myFriendArr[i];
+						if (friendArray.length > 0) {
+							myFriendListHtml += '<li data-group="' + engWords[i] + '" class="mui-table-view-divider mui-indexed-list-group">' + engWords[i] + '</li>';
+							for (var j = 0 ; j < friendArray.length ; j ++ ) {
+								myFriendListHtml += '' +
+											'<li id="li_friend" friendId="' + friendArray[j].userId + '" friendNickname="' + friendArray[j].nickname + '" friendFaceImg="' + friendArray[j].faceImg + '" class="mui-media mui-table-view-cell mui-indexed-list-item" style="padding: 8px 10px;">' +
+												'<img class="mui-media-object mui-pull-left" style="max-width: 40px;height: 40px;" src="' + friendArray[j].faceImg + '"/>' +
+												'<div class="mui-media-body" style="line-height: 40px;">' + friendArray[j].nickname + '</div>' +
+											'</li>';
+							}
 						}
 					}
+					
+					document.getElementById("ul_friend_list").innerHTML = myFriendListHtml;
+					
+					// 清空数组
+					clearMyFriendArr();
+					
+					// 为列表中的每个好友添加监听事件
+					mui("#ul_friend_list").on("tap","#li_friend",function(){
+						
+						var friendId = this.getAttribute("friendId");
+						var friendNickname = this.getAttribute("friendNickname");
+						var friendFaceImg = this.getAttribute("friendFaceImg");
+						
+						mui.openWindow({
+							url : "chat.html",
+							id : "chat-"+friendId ,
+							extras : {
+								'friendId' : friendId,
+								'friendNickname' : friendNickname,
+								'friendFaceImg' : friendFaceImg
+							}
+						})
+						
+					})
+					
 				}
-				
-				document.getElementById("ul_friend_list").innerHTML = myFriendListHtml;
-				
-				// 清空数组
-				clearMyFriendArr();
-				
 			}
 
 			// 从后台加载好友信息并存入缓存
@@ -169,16 +204,15 @@
 						'Content-Type': 'application/json'
 					},
 					success: function(data) {
-						console.log(JSON.stringify(data.data))
 						//服务器返回响应
 						if (data.status == 200) {
 							utils.setFriendList(data.data)
 						} else {
-							plus.nativeUI.toast(data.msg)
+							utils.showToast(data.msg)
 						}
 					},
 					error: function() {
-						plus.nativeUI.toast("服务器出错...")
+						utils.showToast("服务器发生错误")
 					}
 				});
 			}

@@ -91,7 +91,7 @@
 					time: 1000
 				});
 			} else {
-				plus.nativeUI.showWaiting("正在注册...")
+				utils.showWaiting("正在注册...")
 				// 获取每台手机的唯一id
 				var cid = plus.push.getClientInfo().clientid;
 				// 与后端联调
@@ -109,7 +109,7 @@
 						'Content-Type': 'application/json'
 					},
 					success: function(data) {
-						plus.nativeUI.closeWaiting()
+						utils.closeWaiting();
 						//服务器返回响应，根据响应结果，分析是否登录成功；
 						console.log(JSON.stringify(data))
 						if (data.status == 500) {
@@ -132,8 +132,8 @@
 					},
 					error: function(xhr, type, errorThrown) {
 						//异常处理；
-						plus.nativeUI.closeWaiting()
-						plus.nativeUI.toast("服务器出错...")
+						utils.closeWaiting();
+						utils.showToast("服务器发生错误")
 					}
 				});
 			}

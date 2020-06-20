@@ -60,12 +60,12 @@
 		
 		// 扫描二维码成功的回调函数
 		function onmarked( type, result ) {
-			plus.nativeUI.showWaiting("请稍后...");
+			utils.showWaiting("请稍后...")
 			if(type == 0){
 				if(utils.isNull(result)){
-					plus.nativeUI.toast("扫描结果出错")
+					utils.showToast("扫描结果出错")
 				}else{
-					plus.nativeUI.showWaiting("请稍后...");
+					utils.showWaiting("请稍后...")
 					var userInfo = utils.getUserInfo()
 					var ajaxUrl = utils.serverIp + "/user/friend/search2?userId=" + userInfo.userId +
 						"&friendId=" + result;
@@ -79,7 +79,7 @@
 						},
 						success: function(data) {
 							//服务器返回响应，根据响应结果，分析是否登录成功；
-							plus.nativeUI.closeWaiting();
+							utils.closeWaiting()
 							if (data.status == 200) {
 								// 跳转至查询结果页面
 								mui.openWindow({
@@ -92,18 +92,18 @@
 									}
 								})
 							} else {
-								plus.nativeUI.toast(data.msg)
+								utils.showToast(data.msg)
 							}
 						},
 						error: function() {
-							plus.nativeUI.closeWaiting();
-							plus.nativeUI.toast("服务器出错...")
+							utils.closeWaiting();
+							utils.showToast("服务器发生错误")
 						}
 					});
 				}
 				
 			}else{
-				plus.nativeUI.toast("非用户二维码")
+				utils.showToast("非用户二维码")
 			}
 			
 			// 延时1秒再次启动扫描

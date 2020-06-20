@@ -84,15 +84,6 @@
 		// 添加页面
 		mui.plusReady(function() {
 
-			// 获取当前窗口的webview
-			var meWebview = plus.webview.currentWebview();
-			// 监听当前窗口的show方法，刷新用户信息
-			meWebview.addEventListener("show", function() {
-				// 刷新me.html
-				var meWebview = plus.webview.getWebviewById("me");
-				mui.fire(meWebview, "refreshUserInfo");
-			})
-
 			// 获取当前webview对象
 			var indexWebview = plus.webview.currentWebview()
 			// 对当前webview追加子页的webview对象
@@ -105,6 +96,12 @@
 			}
 			// 默认显示第一个页面
 			plus.webview.show(pageArr[0].id)
+			
+			indexWebview.addEventListener("show",function(){
+				// 延时加载
+				setTimeout(initPages(), "100");
+			})
+			
 		})
 
 		// 监听添加好友按钮
@@ -124,7 +121,22 @@
 				}
 			}
 		})
-
+		
+		// 预加载
+		function initPages(){
+			console.log("index.initPages")
+			// 刷新me.html
+			var meWebview = plus.webview.getWebviewById("me");
+			mui.fire(meWebview, "initMePage");
+			// 刷新contact.html
+			var contactWebview = plus.webview.getWebviewById("contact");
+			mui.fire(contactWebview, "initContactPage");
+			// 刷新chat-list.html
+			var chatListWebview = plus.webview.getWebviewById("chat-list");
+			mui.fire(chatListWebview, "initChatListPage");
+			
+		}
+		
 		// 2秒内，两次按返回键退出应用
 		var first = null;
 		mui.back = function() {

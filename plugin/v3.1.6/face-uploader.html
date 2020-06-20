@@ -60,22 +60,21 @@
 		
 		var $image = $('#image');
 		mui.plusReady(function() {
-			plus.nativeUI.showWaiting( "打开相册中..." );
-			
+			utils.showWaiting("正在打开相册...")
 			var userInfo = utils.getUserInfo()
 			var img_myface = document.getElementById("img_myface");
 			
 			/** ======================== 从相册选择图片 ======================== **/
 				plus.gallery.pick( function(path){
 					// 关闭等待框
-					plus.nativeUI.closeWaiting();
+					utils.closeWaiting();
 					
 					$image.attr('src', path);
 					
 					faceCutter();
 				}, function ( e ) {
 					// 关闭等待框
-					plus.nativeUI.closeWaiting();
+					utils.closeWaiting();
 					// 未选择本地图片，返回头像页面，新建窗口，避免出现原头像的Bug
 					mui.openWindow({
 						url : "../../me/face.html",
@@ -88,7 +87,7 @@
 			
 			$("#cutter").on('tap', function() {
 				
-				plus.nativeUI.showWaiting( "上传中..." );
+				utils.showWaiting("上传中...")
 				
 				var cropper = $image.data('cropper');
 				var result = $image.cropper("getCroppedCanvas");
@@ -106,7 +105,7 @@
 						headers:{'Content-Type':'application/json'},	              
 						success:function(data){
 							// 关闭等待框
-							plus.nativeUI.closeWaiting();
+							utils.closeWaiting();
 							if (data.status == 200) {
 								// 更新用户的缓存
 								var userInfo = data.data;
@@ -124,12 +123,12 @@
 									createNew : true
 								});
 							} else {
-								plus.nativeUI.toast(data.msg)
+								utils.showToast(data.msg)
 							}
 						},
 						error : function(){
-							plus.nativeUI.closeWaiting()
-							plus.nativeUI.toast("服务器出错...")
+							utils.closeWaiting();
+							utils.showToast("服务器发生错误")
 						}
 					});
 				}
@@ -138,7 +137,7 @@
 		
 		function faceCutter() {
 			
-			plus.nativeUI.showWaiting( "请稍等..." );
+			utils.showWaiting("请稍后...")
 			
 //				var $image = $('#image');
 			var options = {
@@ -149,7 +148,7 @@
 			// Cropper
 			$image.cropper(options);
 			
-			plus.nativeUI.closeWaiting();
+			utils.closeWaiting();
 		}
 	</script>
 </html>

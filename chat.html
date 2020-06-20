@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="css/header.css" />
+		<link rel="stylesheet" type="text/css" href="css/chat.css" />
+		<style>
+			html,
+			body {
+				height: 100%;
+				margin: 0px;
+				padding: 0px;
+				overflow: hidden;
+				-webkit-touch-callout: none;
+				-webkit-user-select: none;
+			}
+		</style>
+	</head>
+
+	<body contextmenu="return false;">
+
+		<!-- 标题 -->
+		<header class="mui-bar mui-bar-nav title">
+			<!-- 返回键 -->
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left title-text"></a>
+			<h1 id="h1_nickname" class="mui-title title-text" style="position:relative;left:8px;font-size: 20px;"></h1>
+		</header>
+
+		<div id="msg-outter" class="mui-content">
+			<div id='div_msg'>
+				
+				<div class="friend_lists">
+					<div class="header_img">
+						<img src="images/face.jpg" width="40px" height="40px" />
+					</div>
+					<div class="msg-wrapper right">
+						<p class="msg-left-white">晚上过来吃饭？</p>
+					</div>
+				</div>
+
+				<div class="me_lists">
+					<div class="header_img">
+						<img src="images/face.jpg" width="40px" height="40px" />
+					</div>
+					<div class="msg-wrapper left">
+						<p class="msg-right-blue">好的，没问题！时间地点？</p>
+					</div>
+				</div>
+				
+				<div class="friend_lists">
+					<div class="header_img">
+						<img src="images/face.jpg" width="40px" height="40px" />
+					</div>
+					<div class="msg-wrapper right">
+						<p class="msg-left-white">xaxsa？</p>
+					</div>
+				</div>
+				<div class="me_lists">
+					<div class="header_img">
+						<img src="images/face.jpg" width="40px" height="40px" />
+					</div>
+					<div class="msg-wrapper left">
+						<p class="msg-right-blue">地csa点？</p>
+					</div>
+				</div>
+				<div class="friend_lists">
+					<div class="header_img">
+						<img src="images/face.jpg" width="40px" height="40px" />
+					</div>
+					<div class="msg-wrapper right">
+						<p class="msg-left-white">xaxsa？</p>
+					</div>
+				</div>
+				<div class="me_lists">
+					<div class="header_img">
+						<img src="images/face.jpg" width="40px" height="40px" />
+					</div>
+					<div class="msg-wrapper left">
+						<p class="msg-right-blue">地csa点？</p>
+					</div>
+				</div>
+				<div class="friend_lists">
+					<div class="header_img">
+						<img src="images/face.jpg" width="40px" height="40px" />
+					</div>
+					<div class="msg-wrapper right">
+						<p class="msg-left-white">xa44444xsa？</p>
+					</div>
+				</div>
+				<div class="me_lists">
+					<div class="header_img">
+						<img src="images/face.jpg" width="40px" height="40px" />
+					</div>
+					<div class="msg-wrapper left">
+						<p class="msg-right-blue">地3333点？</p>
+					</div>
+				</div>
+				<div class="friend_lists">
+					<div class="header_img">
+						<img src="images/face.jpg" width="40px" height="40px" />
+					</div>
+					<div class="msg-wrapper right">
+						<p class="msg-left-white">222？</p>
+					</div>
+				</div>
+				<div class="me_lists">
+					<div class="header_img">
+						<img src="images/face.jpg" width="40px" height="40px" />
+					</div>
+					<div class="msg-wrapper left">
+						<p class="msg-right-blue">11</p>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		
+		<footer>
+			<div class="footer-center">
+				<textarea id='text_msg' type="text" class='input-text'></textarea>
+			</div>
+			<label for="" class="footer-right">
+				<button id="btn_send" type="button" class="mui-btn mui-btn-gray">发送</button>
+			</label>
+		</footer>
+		
+		<script src="js/mui.min.js"></script>
+		<script src="js/utils.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			
+			mui.plusReady(function () {
+			    
+				// 设置窗口滚动，显示最新一条消息
+				scrollWindow();
+				
+				// 获取本窗口的webview
+				var thisWebview = plus.webview.currentWebview();
+				
+				// 获取好友的相关参数
+				var friendId = thisWebview.friendId;
+				var friendNickname = thisWebview.friendNickname;
+				var friendFaceImg = thisWebview.friendFaceImg
+				
+				// 设置昵称
+				document.getElementById("h1_nickname").innerHTML = friendNickname;
+				// 设置软键盘样式
+				thisWebview.setStyle({
+					softinputMode:"adjustResize"
+				})
+				
+				// 监听输入框，改变发送按钮样式
+				var btn_send = document.getElementById("btn_send")
+				var text_msg = document.getElementById("text_msg")
+				text_msg.addEventListener("input",function(){
+					if(text_msg.value.length > 0){
+						btn_send.style.backgroundColor = "#0562bf"
+						btn_send.style.color = "#FFFFFF"
+					}else{
+						// btn_send.setAttribute("class","mui-btn mui-btn-gray")
+						btn_send.style.backgroundColor = "#FFFFFF"
+						btn_send.style.color = "#000000"
+					}
+				})
+				// 打开软键盘后，窗口大小变化，触发resize方法，监听resize方法
+				window.addEventListener("resize",function(){
+					scrollWindow();
+				})
+			})
+			
+			// 调整聊天窗口滚动
+			function scrollWindow(){
+				var div_msg = document.getElementById("div_msg");
+				div_msg.scrollTop =  div_msg.scrollHeight + div_msg.offsetHeight
+			}
+			
+			
+			
+		</script>
+	</body>
+
+</html>

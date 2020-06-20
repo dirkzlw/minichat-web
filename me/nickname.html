@@ -44,11 +44,11 @@
 				var nickname =  input_nickname.value
 				
 				if(utils.isNull(nickname)){
-					plus.nativeUI.toast("昵称不能为空")
+					utils.showToast("昵称不能为空")
 				}else if(userInfo.nickname == nickname){
-					plus.nativeUI.toast("昵称未修改")
+					utils.showToast("昵称未修改")
 				}else{
-					plus.nativeUI.showWaiting("请稍后...")
+					utils.showWaiting("请稍后...")
 					mui.ajax(utils.serverIp+ "/user/reset/nickname",{
 						data:{
 							userId:userInfo.userId,
@@ -60,7 +60,7 @@
 						headers:{'Content-Type':'application/json'},	              
 						success:function(data){
 							
-							plus.nativeUI.closeWaiting();
+							utils.closeWaiting();
 							
 							//服务器返回响应，根据响应结果，分析是否登录成功；
 							if (data.status == 200) {
@@ -73,12 +73,12 @@
 								// 页面跳转
 								mui.back();
 							} else {
-								plus.nativeUI.toast(data.msg)
+								utils.showToast(data.msg)
 							}
 						},
 						error : function(){
-							plus.nativeUI.closeWaiting()
-							plus.nativeUI.toast("服务器出错...")
+							utils.closeWaiting();
+							utils.showToast("服务器发生错误")
 						}
 					});
 				}

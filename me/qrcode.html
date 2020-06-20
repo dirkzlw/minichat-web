@@ -63,21 +63,21 @@
 			var a_download = document.getElementById("a_download")
 			a_download.addEventListener("tap",function(){
 				
-				plus.nativeUI.showWaiting( "下载中..." );
+				utils.showWaiting("下载中...")
 				
 				plus.downloader.createDownload(
 					userInfo.qrcode, 
 					{},
 					function(d, status) {
-						plus.nativeUI.closeWaiting();
+						utils.closeWaiting();
 						// 下载完成
 						if(status == 200) {
 							console.log("Download success: " + d.filename);
 							plus.gallery.save( d.filename, function () {
-								plus.nativeUI.toast("二维码下载成功")
+								utils.showToast("二维码下载成功")
 							});
 						} else {
-							plus.nativeUI.toast("下载失败...")
+							utils.showToast("下载失败")
 							console.log("Download failed: " + status);
 						}
 				}).start();
